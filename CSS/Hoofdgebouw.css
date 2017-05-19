@@ -1,0 +1,17 @@
+#wrapper{
+    width:50%;
+    margin-left:25%;
+    z-index:-1;
+}
+#top{
+    height:15%;
+    position:relative;
+    background-color:green;
+    z-index:1;
+}
+#bottom{
+    height:85%;
+    position:relative;
+    background-color:blue;
+    z-index:1;
+}

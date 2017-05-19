@@ -68,7 +68,9 @@ var x = setInterval(function() {
   $("#Building3").html(minutes + "m " + seconds + "s ");
 
   if (seconds < 1 && minutes == 0) {
-    location.reload();
+    setTimeout(function() {
+      location.reload();
+    }, 1500);
   }
 }, 1000);
 </script>
