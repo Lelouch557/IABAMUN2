@@ -1,5 +1,4 @@
 <?php
-session_start();
 include_once('general.config.php');
 if(isset($_GET['L'])){
   REQUIRE_ONCE('./Language/'.$_GET['L'].'/Global.php');

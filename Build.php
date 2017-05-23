@@ -39,12 +39,14 @@ $Hours = $TimeToNext / 60 / 24;
 $Min = ($TimeToNext-$Hours)/60;
 $Sec = $TimeToNext - $Hours - $Min;
 $Time = time() + $TimeToNext;
+$level = 1;
 
 if($ResA[3] >= $Cost['Wood'] AND $ResA[1] >= $Cost['Metals'] AND $ResA[2] >= $Cost['Stone']){
-    $query = $db->prepare("insert into `building_in_progress` (Village_ID,End_Time,Building_ID) VALUES(?,?,?)");
+    $query = $db->prepare("insert into `building_in_progress` (Village_ID,End_Time,Building_ID,Level) VALUES(?,?,?,?)");
     $query->bindPARAM(1,$Village,PDO::PARAM_INT);
-    $query->bindPARAM(2,$Time,PDO::PARAM_STR);
+    $query->bindPARAM(2,$Time,PDO::PARAM_INT);
     $query->bindPARAM(3,$Building,PDO::PARAM_INT);
+    $query->bindPARAM(4,$level,PDO::PARAM_INT);
     $query->execute();
 }
 ?>

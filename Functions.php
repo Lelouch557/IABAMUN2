@@ -7,8 +7,7 @@ switch($_POST['Action']){
         $levelup->ID = $_SESSION['Village'];
         $levelup->db = $db;
         $levelup->BuildingID = $_POST['ID'];
-        print_r($_REQUEST);
-        print_r($_SESSION['Village']);
-        return $levelup->Building_Up();
+        
+        echo $levelup->Building_Up();
     break;
 }

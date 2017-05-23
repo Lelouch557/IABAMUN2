@@ -1,5 +1,4 @@
 <?php
-session_start();
 require_once('general.config.php');
 if(isset($_GET['L'])){
   REQUIRE_ONCE('./Language/'.$_GET['L'].'/Global.php');
@@ -44,7 +43,7 @@ $BuildingsL = $query->fetchall(PDO::FETCH_ASSOC);
 $script = '';
 	for($integer=0;count($BuildingsP)>$integer;$integer++){
 		$query = $db->prepare('select * from `building_list` where Building_ID=?');
-		$query->bindPARAM(1,$BuildingsP[0]['Building_ID'],PDO::PARAM_INT);
+		$query->bindPARAM(1,$BuildingsP[$integer]['Building_ID'],PDO::PARAM_INT);
 		$query->execute();
 		$result = $query->fetchall(PDO::FETCH_ASSOC);
 
@@ -70,7 +69,7 @@ $script = '';
 		time'.$integer.'();
 ';
 		echo"
-		<tr>
+		<tr class='BIP'>
 			<td>
 				<img src='./Images/".$result[0]['Building_Name']."2.png' style='width:50px'></img>
 			</td>
@@ -112,6 +111,7 @@ for($i=0;$i<count($BuildingsL);$i++){
 				<img src='./Images/".$BuildingsV[$i]['Building_Name']."2.png' style='width:50px'></img>
 			</td>
 			<td>
+			
 				<p>".$BuildingsV[$i]['Level']."</p>
 			</td>
 			<td>
@@ -121,8 +121,8 @@ for($i=0;$i<count($BuildingsL);$i++){
 				<p>".$BuildingsV[$i]['Time_to_Next']."Seconds</p>
 			</td>
 			<td>
-				<input type='button' onclick='Level_Up(\"".$BuildingsL[$i]['Building_ID']."\")' value='Level up to level.".($BuildingsV[$i]['Level']+1)."'/><br/>
-			</td>
+				<input type='button'onclick='Level_Up(".$BuildingsV[$i]['Building_ID'].")' value='Level Up'/><br/>
+				
 		</tr>";
 	}else{
 	echo"
@@ -151,11 +151,24 @@ for($i=0;$i<count($BuildingsL);$i++){
 </div>
 </body>
 <script>
+
 <?= $script?>
 	function Cancle(data){
-		$.post('Build_Cancle.php',{Building:data},function(){location.reload();});
+		$.post('Build_Cancle.php',{Building:data},function(){
+			location.reload();
+			}
+		);
 	}
-	function Level_Up(data){
-		$.post('Build.php',{Building:data},function(){location.reload();});
-	}
+	
+function Level_Up($ID){
+	$.post('Functions.php',{Action:"Level_B",ID:$ID},function(data){
+		if(data=='Yes'){
+			location.reload();
+			}else{
+				alert('<?= Validate1 ?>');
+			}
+		}
+	);
+}
+
 </script>

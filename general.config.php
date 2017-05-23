@@ -1,6 +1,9 @@
 <?php
+session_start();
 $user = 'Andre';
 $pass = '3EpUhpQuLGDuYCHS';
+$host = 'localhost';
+
 $dbname = 'iabamun';
 $host = 'localhost';
 
