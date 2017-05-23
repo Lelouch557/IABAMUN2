@@ -1,0 +1,14 @@
+#hoofdgebouw{background-color:black;}
+#research{background-color:red;}
+#storage{background-color:blue;}
+#resources{background-color:green;}
+#commands{background-color:yellow;}
+#armory{background-color:sandybrown;}
+
+.Input{
+    box-shadow: inset 0px 0px 100px 100px white;
+    -webkit-autofill-box-shadow: inset 0px 0px 100px 100px white;
+}
+#RegiBut{
+    width:100%;
+}

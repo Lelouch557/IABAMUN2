@@ -11,10 +11,16 @@ $query = $db->prepare('select * from village where User_ID=?');
 $query->bindPARAM(1,$_SESSION['USR'],PDO::PARAM_STR);
 $query->execute();
 $result = $query->fetchall(PDO::FETCH_ASSOC);
+$_SESSION['Village'] = $result[0]['Village_ID'];
 
 $resource = new Resource;
 $resource->db = $db;
-$awnser = $resource->Update($result[0]['Storage_ID']);
+$resource->ID = $result[0]['Village_ID'];
+$Res = $resource->Build();
+$Res = $resource->Update();
+
+$ResA = explode(',',$Res);
+$awnser = $ResA[0].' Food<br/>'.$ResA[1].' Metal<br/>'.$ResA[2].' Stone<br/>'.$ResA[3].' Wood<br/>';
 
 $query = $db->prepare('select * from storage where Storage_ID = ?');
 $query->bindPARAM(1,$result[0]['Storage_ID'],PDO::PARAM_STR);

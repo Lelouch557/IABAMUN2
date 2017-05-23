@@ -40,7 +40,7 @@ if(isset($_GET['L'])){
 <script>
 		$SavedName = '';
 		Messages = [];
-		Messages[1] = '<?=  'InlogValidationMessage1' ?>';
+		Messages[1] = '<?= InlogValidationMessage1 ?>';
 		Messages['User_Name'] = '<?=  'User_Name' ?>';
 		Messages['Password'] = '<?=  'Password' ?>';
 		function Inlog(){
@@ -61,13 +61,12 @@ if(isset($_GET['L'])){
 			}else{
 				$.post('Check_Acc.php',{name:$USR_N,pass:$Pass},function(data){
 					if(data==='0'){
-						alert(data);
 						$('#FORM').submit();
 					}else{
 						if(data==='1'){
-							alert('<?=  'InlogValidationMessage3' ?>');
+							alert('<?=  InlogValidationMessage3 ?>');
 						}else{
-							alert('<?=  'InlogValidationMessage4' ?>');
+							alert('<?=  InlogValidationMessage4 ?>');
 						}
 					}
 				});

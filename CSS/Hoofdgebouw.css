@@ -12,6 +12,18 @@
 #bottom{
     height:85%;
     position:relative;
-    background-color:blue;
+    background-color:#e5c682;
     z-index:1;
+}
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+tr, th{
+    border-width:1px;
+    border-style:solid;
+    border-color:#a7905d;
+}
+.NBY{
+    background-color:#a7905d;
 }

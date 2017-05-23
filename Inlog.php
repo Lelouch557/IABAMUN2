@@ -1,13 +1,6 @@
 <?php
 session_start();
 include_once('general.config.php');
-#
-function customError($errno, $errstr) {
-  echo '<b>Error:</b> ['.$errno.'] '.$errstr;
-  die('');
-}
-
-set_error_handler("customError");
 
 $pass = $_POST['Password'];
 $name = $_POST['User_Name'];
