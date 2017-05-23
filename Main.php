@@ -1,5 +1,6 @@
 <?php
 session_start();
+
 include_once('general.config.php');
 if(isset($_GET['L'])){
   REQUIRE_ONCE('./Language/'.$_GET['L'].'/Global.php');
@@ -11,7 +12,7 @@ $query = $db->prepare('select * from village where User_ID=?');
 $query->bindPARAM(1,$_SESSION['USR'],PDO::PARAM_STR);
 $query->execute();
 $result = $query->fetchall(PDO::FETCH_ASSOC);
-
+$_SESSION['Village'] = $result[0]['Village_ID'];
 $resource = new Resource;
 $resource->db = $db;
 $awnser = $resource->Update($result[0]['Storage_ID']);

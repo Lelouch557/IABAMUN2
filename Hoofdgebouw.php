@@ -1,5 +1,4 @@
 <?php
-session_start();
 require_once('general.config.php');
 if(isset($_GET['L'])){
   REQUIRE_ONCE('./Language/'.$_GET['L'].'/Global.php');
@@ -54,7 +53,7 @@ for($i=0;$i<count($BuildingsL);$i++){
 				<img src='./Images/".$BuildingsL[$i]['Building_Name']."2.png' style='width:50px'></img>
 			</td>
 			<td>
-				<input type='button' value='Level Up'/><br/>
+				<input type='button'onclick='LevelUp(".$BuildingsV[$i]['Level'].", ".$BuildingsV[$i]['Building_ID'].")' value='Level Up'/><br/>
 			</td>
 		</tr>";
 	}else{
@@ -74,3 +73,15 @@ for($i=0;$i<count($BuildingsL);$i++){
 </div>
 </div>
 </body>
+<script>
+function LevelUp($ID){
+	$.post('Functions.php',{Action:"Level_B",ID:$ID},function(data){
+		if(data=='Yes'){
+			location.reload();
+			}else{
+				alert('<?= Validate1 ?>');
+			}
+		}
+	);
+}
+</script>
