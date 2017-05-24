@@ -7,7 +7,10 @@ switch($_POST['Action']){
         $levelup->ID = $_SESSION['Village'];
         $levelup->db = $db;
         $levelup->BuildingID = $_POST['ID'];
-        
         echo $levelup->Building_Up();
+    break;
+    case 'delete':
+        require_once('Build.php');
+        $levelup = new Level;
     break;
 }

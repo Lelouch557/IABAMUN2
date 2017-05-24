@@ -27,7 +27,7 @@ $Res = $resource->Update();
 <div id='bottom'>
 <table>
 <?php 
-$query = $db->prepare('select `ID`,`Building_ID`,`End_Time` from `building_in_progress` where Village_ID=?');
+$query = $db->prepare('select * from `building_in_progress` where Village_ID=?');
 $query->bindPARAM(1,$_SESSION['Village'],PDO::PARAM_INT);
 $query->execute();
 $BuildingsP = $query->fetchall(PDO::FETCH_ASSOC);
@@ -74,10 +74,10 @@ $script = '';
 				<img src='./Images/".$result[0]['Building_Name']."2.png' style='width:50px'></img>
 			</td>
 			<td>
-				<p>".$result[0]['Building_Name']."</p>
+				<p>".$BuildingsP[$integer]['Level']."</p>
 			</td>
 			<td>
-				<p>".date('i:s',$BuildingsP[$integer]['End_Time'])."</p>
+				<p>".constant($result[0]['Building_Name'])."</p>
 			</td>
 			<td>
 				<p id='Time_to_Finished".$integer."'></p>
@@ -115,7 +115,7 @@ for($i=0;$i<count($BuildingsL);$i++){
 				<p>".$BuildingsV[$i]['Level']."</p>
 			</td>
 			<td>
-				<p>".$$BuildingsV[$i]['Building_Name']."</p>
+				<p>".constant($BuildingsV[$i]['Building_Name'])."</p>
 			</td>
 			<td>
 				<p>".$BuildingsV[$i]['Time_to_Next']."Seconds</p>
@@ -134,12 +134,12 @@ for($i=0;$i<count($BuildingsL);$i++){
 				<p>Not Build Yet.</p>
 			</td>
 			<td>
-				<p>".$$BuildingsL[$i]['Building_Name']."</p>
+				<p>".constant($BuildingsL[$i]['Building_Name'])."</p>
 			</td>
 			<td>
 				<p>".$BuildingsL[$i]['Time_to_Next']."seconds</p>
 			</td>
-			<td><input onclick='Level_Up(\"".$BuildingsL[$i]['Building_ID']."\")' type='button' value='Build'/><br/>
+			<td><input onclick='Build(\"".$BuildingsL[$i]['Building_ID']."\")' type='button' value='Build'/><br/>
 			</td>
 		</tr>";
 	}
@@ -160,6 +160,10 @@ for($i=0;$i<count($BuildingsL);$i++){
 		);
 	}
 	
+	function Build(data){
+$.post('Build.php',{Building:data},function(){location.reload();});
+	}
+
 function Level_Up($ID){
 	$.post('Functions.php',{Action:"Level_B",ID:$ID},function(data){
 		if(data=='Yes'){
