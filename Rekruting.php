@@ -11,9 +11,15 @@ $resource->db = $db;
 $resource->ID = $_SESSION['Village'];
 $Buil = $resource->Build();
 $Res = $resource->Update();
+
+$UnitsInProgress = new Train;
+$resource->db = $db;
+$resource->ID = $_SESSION['Village'];
+
+
 $query = $db->prepare("select * from `unit`");
 $query->execute();
-$result = $query->fetachall(PDO::FETCH_ASSOC);
+$result = $query->fetchall(PDO::FETCH_ASSOC);
 ?>
 <!DOCTYPE html>
 <html>
@@ -30,30 +36,36 @@ $result = $query->fetachall(PDO::FETCH_ASSOC);
 <div id='bottom'>
 <table>
     <?php
-    for($i=0;$i<count($result);$i++){?>
+    $script='';
+    for($i=0;$i<count($result);$i++){
+        $script = $script."
+        ".$result[$i]['Unit_Name']." = $('#".$result[$i]['Unit_Name']."').val();
+        if(!".$result[$i]['Unit_Name']."){
+            ".$result[$i]['Unit_Name']." = 0;
+        }
+        MyArray.push(".$result[$i]['Unit_Name'].");
+        ";
+    ?>
         <tr>
+            <td><img src="./Images/<?= $result[$i]['Unit_Name'] ?>.png" style="width:125px;"/></img>
             <td><p><?= constant($result[$i]['Unit_Name']) ?></p></td>
-            <td><input type="number"></td>
-        </tr>
-        <tr>
-            <td><p><?= bow ?></p></td>
-            <td><input type="number"></td>
-        </tr>
-        <tr>
-            <td><p><?= spear ?></p></td>
-            <td><input type="number"></td>
-        </tr>
-        <tr>
-            <td><p><?= lightCavalery ?></p></td>
-            <td><input type="number"></td>
-        </tr>
-        <tr>
-            <td><p><?= heavyCavalery ?></p></td>
-            <td><input type="number"></td>
-        </tr>
-        <tr>
-            <td><p><?= mountedCavalery ?></p></td>
-            <td><input type="number"></td>
+            <td><p><?= $result[$i]['Recrutement_Time'] ?> sec</p></td>
+            <td><input type="number" id='<?= $result[$i]['Unit_Name'] ?>'></td>
         </tr><?php
     }?>
 </table>
+<input type='button' onclick='train()' value='Train' />
+</body>
+<script Language='javascript'>
+    $('body').keypress(function (e) {
+        if (e.which == 13) {
+            train();
+        }
+    });
+
+    function train(){
+        MyArray = [];
+        <?= $script?>
+        $.post('Functions.php',{Action:'Make_T',units:MyArray},function(data){alert(data);});
+    }
+</script>

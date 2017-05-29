@@ -9,6 +9,14 @@ switch($_POST['Action']){
         $levelup->BuildingID = $_POST['ID'];
         echo $levelup->Building_Up();
     break;
+    case 'Make_T':
+        require_once('Train.php');
+        $make = new Train;
+        $make->ID = $_SESSION['Village'];
+        $make->db = $db;
+        $make->Units = $_POST['units'];
+        echo $make->Make();
+    break;
     case 'delete':
         require_once('Build.php');
         $levelup = new Level;

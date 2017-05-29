@@ -13,6 +13,8 @@ define('Food', 'Farm');
 define('Stone', 'Quarry');
 define('City_Hall', 'Forum');
 define('IABAMUN','IABAUN');
+define('Spear_Man','poki guy');
+define('Sword_Man','stabi guy');
 define('InlogValidationMessage1','Please fill in this field.');
 define('InlogValidationMessage2','User name not in use.');
 define('InlogValidationMessage3','Submitted info is not correct.');
