@@ -1,7 +1,6 @@
 <?php
 include('general.config.php');
-$query = $db->prepare("select * from village where Village_ID=?");
-$query->bindPARAM(1,$_SESSION['Village'],PDO::PARAM_INT);
+$query = $db->prepare("select * from village");
 $query->execute();
 $village = $query->fetchall(PDO::FETCH_ASSOC);
 $query = $db->prepare('select * from cells');
@@ -24,11 +23,16 @@ $result = $query->fetchall(PDO::FETCH_ASSOC);
                 if(($i%20)==0){
                     echo'<tr>';
                 }
+                $bool = false;
                 $k++;
-                if(!$result[$i]['Village_ID']==0){
-                    echo'<td><img src="./Images/village.jpg" class="MapCell"></img></td>';
-                }else{
-                    echo'<td><img src="./Images/'.$result[$i]['Terrain'].$result[$i]['Resource_ID'].'.png" class="MapCell"></img></td>';
+                for($l=0;$l<count($village);$l++){
+                    if(($i+1)==$village[$l]['Cell_ID'] and !$bool){
+                        $pic = '<td><img src="./Images/village.jpg" class="MapCell"></img></td>';
+                        $bool = true;
+                    }else{
+                        $pic = '<td><img src="./Images/'.$result[$i]['Terrain'].$result[$i]['Resource_ID'].'.png" class="MapCell"></img></td>';
+                    }
+                    echo $pic;
                 }
                 if(($k%20)==0){
                     $k=0;

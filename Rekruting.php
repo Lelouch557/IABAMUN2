@@ -12,9 +12,10 @@ $resource->ID = $_SESSION['Village'];
 $Buil = $resource->Build();
 $Res = $resource->Update();
 
+require_once('Train.php');
 $UnitsInProgress = new Train;
-$resource->db = $db;
-$resource->ID = $_SESSION['Village'];
+$UnitsInProgress->db = $db;
+$UnitsInProgress->ID = $_SESSION['Village'];
 
 
 $query = $db->prepare("select * from `unit`");

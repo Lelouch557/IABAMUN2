@@ -4,7 +4,7 @@ class Train{
     public $ID;
     public $Units;
     function Build(){
-        $query = $this-db->prepare('select * from recrutement WHERE Village_ID=?');
+        $query = $this->db->prepare('select * from recrutement WHERE Village_ID=?');
         $query->bindPARAM(1,$this->ID,PDO::PARAM_INT);
         $query->execute();
         $res = $query->fetchALL(PDO::FETCH_ASSOC);
@@ -54,7 +54,7 @@ class Train{
                     $query->bindPARAM(3,$Village_ID,PDO::PARAM_INT);
                     $query->execute();
                 }else{
-                    $query = $this->db->prepare('INSERT INTO `recrutement`SET(Amount,Unit_ID,Village_ID) VALUES(?,?)');
+                    $query = $this->db->prepare('INSERT INTO `recrutement`SET(Amount,Unit_ID,Village_ID,End_Time) VALUES(?,?,?,?)');
                     $query->bindPARAM(1,$this->Units[$i],PDO::PARAM_INT);
                     $query->bindPARAM(2,$i,PDO::PARAM_INT);
                     $query->bindPARAM(3,$Village_ID,PDO::PARAM_INT);
