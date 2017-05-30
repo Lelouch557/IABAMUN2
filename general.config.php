@@ -1,10 +1,11 @@
 <?php
 session_start();
+
 $user = 'Andre';
 $pass = '3EpUhpQuLGDuYCHS';
 $host = 'localhost';
 
-$dbname = 'iabamun';
+$dbname = 'iabamun_Test';
 $host = 'localhost';
 
 $db = new PDO('mysql:host='.$host.';dbname='.$dbname, $user, $pass);

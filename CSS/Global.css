@@ -10,14 +10,15 @@ div{
     background-color: red;
 }
 #Building1H{
-    width: 100px;
+    width: 110px;
     height: 100px;
     position: fixed;
     z-index: 1;
 }
 #Building1D{
-    width: 100px;
-    height: 100px;
+    position:relative;
+    width: 100%;
+    height: 100%;
     background: blue;
 }
 #Building2{
@@ -27,4 +28,35 @@ div{
     position: relative;
     width: 100px;
     height: 200px;
+}
+#Building3{
+    background-color:pink;
+}
+#Building4{
+    background-color:aqua;
+    margin-top: 100px;
+    float: left;
+    z-index: 1;
+    position: relative;
+    width: 110px;
+}
+#Building5L{
+    width: 110px;
+    height: 100px;
+    position: relative;
+    float: left;
+    z-index: 1;
+}
+#Building5{
+    background-color: beige;
+    width:120%;
+    height:100%;
+    position:relative
+}
+#Building6{
+    width: 110px;
+    height: 100px;
+    position: relative;
+    float: left;
+    z-index: 1;
 }

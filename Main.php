@@ -13,10 +13,22 @@ $result = $query->fetchall(PDO::FETCH_ASSOC);
 $_SESSION['Village'] = $result[0]['Village_ID'];
 
 $resource = new Resource;
+$_SESSION['test'] = 'test';
 $resource->db = $db;
 $resource->ID = $result[0]['Village_ID'];
 $Res = $resource->Build();
 $Res = $resource->Update();
+
+require_once('Train.php');
+$UnitsInProgress = new Train;
+$UnitsInProgress->db = $db;
+$UnitsInProgress->ID = $_SESSION['Village'];
+$res = $UnitsInProgress->Build();
+
+$query = $db->prepare('select Amount,Unit_Name from army WHERE Village_ID=?');
+$query->bindPARAM(1,$_SESSION['Village'],PDO::PARAM_INT);
+$query->execute();
+$army = $query->fetchALL(PDO::FETCH_BOTH);
 
 $ResA = explode(',',$Res);
 $awnser = $ResA[0].' Food<br/>'.$ResA[1].' Metal<br/>'.$ResA[2].' Stone<br/>'.$ResA[3].' Wood<br/>';
@@ -47,11 +59,16 @@ $storage = $query->fetchall(PDO::FETCH_ASSOC);
         </div>
     </div>
     <div id='Building4'>
-    </div>
-    <div id='Building5'>
-    </div>
+    <?php for($i=0;$i<count($army);$i++){
+      echo $army[$i][0].' '.constant($army[$i][1]).'\'s<br/>';
+    }?>
     <div id='Building6'>
     </div>
+    </div>
+    <a href="Rekruting.php" id="Building5L">
+      <div id='Building5'>
+      </div>
+    </a>
     <div id='Building7'>
     </div>
     <div id='Building8'>
@@ -59,12 +76,34 @@ $storage = $query->fetchall(PDO::FETCH_ASSOC);
     <div id='Building9'>
     </div>
 </body>
-
+<?php 
+$query = $db->prepare('SELECT * FROM `recrutement` WHERE `Village_ID`=?');
+$query->bindPARAM(1,$_SESSION['Village'],PDO::PARAM_INT);
+$query->execute();
+$RTime = $query->fetchall(PDO::FETCH_ASSOC);
+?>
 <script>
+<?php
+    if(count($RTime)>0){
+        echo'setInterval(function(){
+            var ATM = new Date().getTime(); //mS
+            var Target = 0'.$RTime[0]['End_Time'].'000; //php: in SEconden
+            var Time = Target-ATM; //ms
+            var hours = Math.floor(Time /1000/60/60); //uren
+            var min = Math.floor((Time-hours*1000*60*60) /1000/60);
+            var sec = Math.floor((Time-(hours*1000*60*60)-min*1000*60) /1000);
+            console.log(hours);
+            console.log(min);
+            console.log(sec);
+            console.log(Time);console.log((Time-(hours*1000*60*60*24)-min*1000*60*60)/1000/60);
+            $("#Building6").html(hours + "h " + min + "m " + sec + "s ");
+            if(Time<0){
+              location.reload();
+            }
+        },1000);';
+    }
+?>
 var x = setInterval(function() {
-
-  var now = new Date().getTime();
-
   var distance = 3600000 - new Date().getTime() % 3600000;
    
   var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));

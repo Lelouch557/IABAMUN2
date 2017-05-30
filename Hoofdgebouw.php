@@ -11,6 +11,7 @@ $resource->db = $db;
 $resource->ID = $_SESSION['Village'];
 $Buil = $resource->Build();
 $Res = $resource->Update();
+print_r($_SESSION['Village']);
 ?>
 <!DOCTYPE html>
 <html>

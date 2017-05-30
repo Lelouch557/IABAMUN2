@@ -10,56 +10,61 @@ class Train{
         $res = $query->fetchALL(PDO::FETCH_ASSOC);
         for($i=0;$i<count($res);$i++){
             if(time()>$res[0]['End_Time']){
-                
+                $query = $this->db->prepare('select Amount from army WHERE Village_ID=? AND Unit_ID=?');
+                $query->bindPARAM(1,$this->ID,PDO::PARAM_INT);
+                $query->bindPARAM(2,$res[$i]['Unit_ID'],PDO::PARAM_INT);
+                $query->execute();
+                $result = $query->fetchALL(PDO::FETCH_ASSOC);
+
+                $Amount = $result[0]['Amount'] + $res[0]['Amount'];
+                $query = $this->db->prepare('update `army` SET Amount=? where Village_ID=? AND Unit_ID=?');
+                $query->bindPARAM(1,$Amount,PDO::PARAM_INT);
+                $query->bindPARAM(2,$this->ID,PDO::PARAM_INT);
+                $query->bindPARAM(3,$res[$i]['Unit_ID'],PDO::PARAM_STR);
+                $query->execute();
+                $query = $this->db->prepare('DELETE FROM `recrutement` WHERE Recrutement_ID=?');
+                $query->bindPARAM(1,$res[$i]['Recrutement_ID'],PDO::PARAM_INT);
+                $query->execute();
             }
         }
+        return 'Yes';
     }
     function Make(){
-        
         $query = $this->db->prepare('SELECT * FROM `storage` INNER JOIN `village` on `village`.Storage_ID=`storage`.Storage_ID WHERE `village`.Village_ID=?');
         $query->bindPARAM(1,$this->ID,PDO::PARAM_INT);
         $query->execute();
         $result = $query->fetchALL(PDO::FETCH_ASSOC);
         
-        //$query = $this->db->prepare('SELECT `Recrutement_Time` FROM `Unit` WHERE Village_ID=? AND Building_ID=?');
-        $query = $this->db->prepare('SELECT `Recrutement_Time` FROM `Unit`');
-        $query->bindPARAM(1,$this->ID,PDO::PARAM_INT);
+        $query = $this->db->prepare('SELECT `Recrutement_Time`,`Wood`,`Stone`,`Metals` FROM `Army` where village_ID=?');
         $query->bindPARAM(1,$this->ID,PDO::PARAM_INT);
         $query->execute();
         $BRes = $query->fetchall(PDO::FETCH_ASSOC);
-        for($i=0;$i<count($BRes);$i++){
+        for($i=0;$i<count($this->Units);$i++){
             $cost = array(
-                (($BRes[$i]['Level'] * -($result[$i]['Wood']/100))*3.045988942379389894971),
-                (($BRes[$i]['Level'] * -($result[$i]['Stone']/100))*3.645988942379389894971),
-                (($BRes[$i]['Level'] * -($result[$i]['Metals']/100))*1.745988942379389894971)
+                ($BRes[$i]['Wood'] * $this->Units[$i]),
+                ($BRes[$i]["Stone"] * $this->Units[$i]),
+                ($BRes[$i]['Metals'] * $this->Units[$i])
             );
-
             if($result[$i]['Wood'] >=$cost[0] AND $result[$i]['Stone']>=$cost[1] AND $result[$i]['Metals']>=$cost[2]){
                 $Remaining = array();
                 $Remaining[0] = $result[$i]['Wood'] - $cost[0];
                 $Remaining[1] = $result[$i]['Stone'] - $cost[1];
                 $Remaining[2] = $result[$i]['Wood'] - $cost[2];
+                $Time = ($BRes[0]['Recrutement_Time'] * $this->Units[$i]) + time();
 
-                $Time = $BRes[0]['Time_to_Next'] + time();
-                
                 $query = $this->db->prepare('select * from recrutement where Village_ID=?');
                 $query->bindPARAM(1,$this->ID,PDO::PARAM_INT);
                 $query->execute();
                 $res = $query->fetchall(PDO::FETCH_ASSOC);
-                if(count($res)==0){
-                    $Amount = $this->Units[$i] + $res[0]['Amount'];
-                    $query = $this->db->prepare('UPDATE `recrutement` Amount=?, Unit_ID=?, Village_ID=?');
-                    $query->bindPARAM(1,$Amount,PDO::PARAM_INT);
-                    $query->bindPARAM(2,$i,PDO::PARAM_INT);
-                    $query->bindPARAM(3,$Village_ID,PDO::PARAM_INT);
-                    $query->execute();
-                }else{
-                    $query = $this->db->prepare('INSERT INTO `recrutement`SET(Amount,Unit_ID,Village_ID,End_Time) VALUES(?,?,?,?)');
-                    $query->bindPARAM(1,$this->Units[$i],PDO::PARAM_INT);
-                    $query->bindPARAM(2,$i,PDO::PARAM_INT);
-                    $query->bindPARAM(3,$Village_ID,PDO::PARAM_INT);
-                    $query->execute();
-                }
+
+                $tempID = $i+1;
+                $query = $this->db->prepare('INSERT INTO `recrutement`   (`Amount`,`Unit_ID`,`Village_ID`,`End_Time`) VALUES(?,?,?,?)');
+                $query->bindPARAM(1,$this->Units[$i],PDO::PARAM_INT);
+                $query->bindPARAM(2,$tempID,PDO::PARAM_INT);
+                $query->bindPARAM(3,$this->ID,PDO::PARAM_INT);
+                $query->bindPARAM(4,$Time,PDO::PARAM_INT);
+                $query->execute();
+                
                 $query = $this->db->prepare('UPDATE `storage` INNER JOIN `village` on `village`.Storage_ID=`storage`.Storage_ID SET `Wood`=?, `Stone`=?, `Metals`=? WHERE `village`.Village_ID=?');
                 $query->bindPARAM(1,$Remaining[0],PDO::PARAM_INT);
                 $query->bindPARAM(2,$Remaining[1],PDO::PARAM_INT);
@@ -74,6 +79,4 @@ class Train{
         }
     }
 }
-
-
 ?>

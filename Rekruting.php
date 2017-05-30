@@ -16,9 +16,14 @@ require_once('Train.php');
 $UnitsInProgress = new Train;
 $UnitsInProgress->db = $db;
 $UnitsInProgress->ID = $_SESSION['Village'];
-
+$res = $UnitsInProgress->Build();
 
 $query = $db->prepare("select * from `unit`");
+$query->execute();
+$result = $query->fetchall(PDO::FETCH_ASSOC);
+
+$query = $db->prepare("select * from `Army` where Village_ID=?");
+$query->bindPARAM(1,$_SESSION['Village'],PDO::PARAM_INT);
 $query->execute();
 $result = $query->fetchall(PDO::FETCH_ASSOC);
 ?>

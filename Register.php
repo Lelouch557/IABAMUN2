@@ -1,8 +1,8 @@
 <?php
 if(isset($_COOKIE['Language'])){
-    require_once('./Languages/'.$_COOKIE['Language'].'/Global.php');
+    require_once('./Language/'.$_COOKIE['Language'].'/Global.php');
 }else{
-    require_once('./Languages/ENG/Global.php');
+    require_once('./Language/ENG/Global.php');
 }
 include_once('Navigation.php');
 ?>
@@ -12,7 +12,7 @@ include_once('Navigation.php');
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <meta name="author" content="Andre Blok">
             <link rel="stylesheet" type="text/css" href="./CSS/Main.css">
-            <title><?= $_GLOBAL['Title'] ?> </title>
+            <title><?= Title ?> </title>
             <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         </head>
         <body>
@@ -21,22 +21,22 @@ include_once('Navigation.php');
                     <table>
                         <tr>
                             <td>
-                                <input required autocomplete="off" type="text" id="RegiName" class="Input" placeholder="<?= $_GLOBAL['User_Name'] ?>" />
+                                <input required autocomplete="off" type="text" id="RegiName" class="Input" placeholder="<?= User_Name ?>" />
                             </td>
                         </tr>
                         <tr>
                             <td>
-                                <input required autocomplete="off" type="password" id="RegiPass" class="Input" placeholder="<?= $_GLOBAL['Password'] ?>" />
+                                <input required autocomplete="off" type="password" id="RegiPass" class="Input" placeholder="<?= Password ?>" />
                             </td>
                         </tr>
                         <tr>
                             <td>
-                                <input required autocomplete="off" max='5' type="password" id="RegiPass2" class="Input" placeholder="<?= $_GLOBAL['Password'] ?>" />
+                                <input required autocomplete="off" max='5' type="password" id="RegiPass2" class="Input" placeholder="<?= Password ?>" />
                             </td>
                         </tr>
                         <tr>
                             <td>
-                                <input type="Button" onclick='check()' class="Button" id="RegiBut" value="<?= $_GLOBAL['Register'] ?>" />
+                                <input type="Button" onclick='check()' class="Button" id="RegiBut" value="<?= Register ?>" />
                             </td>
                         </tr>
                     </table>

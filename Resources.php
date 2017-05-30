@@ -48,7 +48,7 @@ class Resource{
         $query->execute();
 
         $storage = $query->fetchall(PDO::FETCH_ASSOC);
-        return $storage[0]['Food'].','.$storage[0]['Metals'].','.$storage[0]['Stone'].','.$storage[0]['Wood'].' Wood';
+        return $storage[0]['Food'].','.$storage[0]['Metals'].','.$storage[0]['Stone'].','.$storage[0]['Wood'];
      }
      function Build(){
         $query = $this->db->prepare('select * from building_in_progress where Village_ID = ?');
