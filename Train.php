@@ -3,6 +3,35 @@ class Train{
     public $db;
     public $ID;
     public $Units;
+    function Order(){
+        $query = $this->db->prepare('select * from army where Village_ID=?');
+        $query->bindPARAM(1,$this->ID,PDO::PARAM_INT);
+        $query->execute();
+        $res = $query->fetchALL(PDO::FETCH_ASSOC);
+        $Remaining = array();
+        for($i=0;$i<count($res);$i++){
+            $left = $res[$i]['Unit_Name'] - $this->Units[$res[$i]['Units_Name']];
+            if(!$left<0){
+                $Remaining[$res[$i]['Units_Name']] = $left;
+                
+                $query = $this->db->prepare("update army Amount=? where Village_ID=? AND Unit_Name=?");
+                $query->bindPARAM(1,$left,PDO::PARAM_INT);
+                $query->bindPARAM(1,$this->ID,PDO::PARAM_INT);
+                $query->bindPARAM(1,$$res[$i]['Units_Name'],PDO::PARAM_INT);
+                $query->execute();
+
+            }else{
+                return'1';
+            }
+            if(!$i<(count($res)-1)){
+                $sqlU .= ',';
+            }
+        }
+            
+                $query = $this->db->prepare('select * from army where Village_ID=?');
+                $query->bindPARAM(1,$this->ID,PDO::PARAM_INT);
+                $query->execute();
+    }
     function Build(){
         $query = $this->db->prepare('select * from recrutement WHERE Village_ID=?');
         $query->bindPARAM(1,$this->ID,PDO::PARAM_INT);

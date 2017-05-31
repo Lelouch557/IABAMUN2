@@ -69,8 +69,10 @@ $storage = $query->fetchall(PDO::FETCH_ASSOC);
       <div id='Building5'>
       </div>
     </a>
-    <div id='Building7'>
-    </div>
+    <a href="Map.php" id="Building7L" >
+      <div id='Building7'>
+      </div>
+    </a>
     <div id='Building8'>
     </div>
     <div id='Building9'>
@@ -92,10 +94,6 @@ $RTime = $query->fetchall(PDO::FETCH_ASSOC);
             var hours = Math.floor(Time /1000/60/60); //uren
             var min = Math.floor((Time-hours*1000*60*60) /1000/60);
             var sec = Math.floor((Time-(hours*1000*60*60)-min*1000*60) /1000);
-            console.log(hours);
-            console.log(min);
-            console.log(sec);
-            console.log(Time);console.log((Time-(hours*1000*60*60*24)-min*1000*60*60)/1000/60);
             $("#Building6").html(hours + "h " + min + "m " + sec + "s ");
             if(Time<0){
               location.reload();

@@ -60,3 +60,17 @@ div{
     float: left;
     z-index: 1;
 }
+#Building7L{
+    z-index: 1;
+    position: relative;
+    width: 110px;
+    height: 100px;
+    float: left;
+}
+#Building7{
+    z-index: 1;
+    background-color: dimgrey;
+    position:relative;
+    width:100%;
+    height:100%;
+}

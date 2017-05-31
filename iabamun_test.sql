@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: May 30, 2017 at 03:43 PM
+-- Generation Time: May 31, 2017 at 03:47 PM
 -- Server version: 10.1.16-MariaDB
 -- PHP Version: 7.0.9
 
@@ -52,7 +52,7 @@ CREATE TABLE `army` (
 --
 
 INSERT INTO `army` (`Army_ID`, `Effectiveness`, `Level`, `Flanking_Range`, `Armor`, `Attack_Power`, `Shielding_Power`, `Amount`, `Morale`, `Piercing`, `Shredding`, `Recrutement_Time`, `Unit_Name`, `Village_ID`, `Unit_ID`, `Wood`, `Stone`, `Metals`) VALUES
-(1, 100, 1, 100, 10, 10, 10, 3954, 10, 10, 10, 101, 'Spear_Man', 1, 1, 40, 0, 50),
+(1, 100, 1, 100, 10, 10, 10, 4154, 10, 10, 10, 101, 'Spear_Man', 1, 1, 40, 0, 50),
 (2, 100, 1, 1, 1, 1, 1, 2, 1, 1, 1, 10, 'Sword_Man', 1, 2, 30, 0, 40);
 
 -- --------------------------------------------------------
@@ -590,6 +590,18 @@ CREATE TABLE `chat_message` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `ordered_units`
+--
+
+CREATE TABLE `ordered_units` (
+  `ID` int(255) NOT NULL,
+  `Spear_Man` int(50) NOT NULL,
+  `Sword_Man` int(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `orders`
 --
 
@@ -598,7 +610,8 @@ CREATE TABLE `orders` (
   `Origin_Village_ID` int(255) NOT NULL,
   `Destination_Village_ID` int(255) NOT NULL,
   `Type` varchar(255) NOT NULL,
-  `Return_On_Success` int(1) NOT NULL
+  `Return_On_Success` int(1) NOT NULL,
+  `Units_ID` int(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -614,14 +627,6 @@ CREATE TABLE `recrutement` (
   `Amount` int(255) NOT NULL,
   `End_Time` int(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `recrutement`
---
-
-INSERT INTO `recrutement` (`Recrutement_ID`, `Village_ID`, `Unit_ID`, `Amount`, `End_Time`) VALUES
-(7, 1, 1, 100, 1496160757),
-(8, 1, 1, 1, 1496150796);
 
 -- --------------------------------------------------------
 
@@ -676,7 +681,7 @@ CREATE TABLE `storage` (
 --
 
 INSERT INTO `storage` (`Storage_ID`, `Food`, `Metals`, `Stone`, `Wood`, `Timestamp`) VALUES
-(1, 2147483647, 2147483647, 2147483647, 2147483647, 1496150733);
+(1, 2147483647, 2147483647, 2147483647, 2147483647, 1496224842);
 
 -- --------------------------------------------------------
 
@@ -982,12 +987,12 @@ ALTER TABLE `bericht`
 -- AUTO_INCREMENT for table `building`
 --
 ALTER TABLE `building`
-  MODIFY `Building_ID` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+  MODIFY `Building_ID` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 --
 -- AUTO_INCREMENT for table `building_in_progress`
 --
 ALTER TABLE `building_in_progress`
-  MODIFY `ID` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=86;
+  MODIFY `ID` int(255) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `building_list`
 --
@@ -997,7 +1002,7 @@ ALTER TABLE `building_list`
 -- AUTO_INCREMENT for table `cells`
 --
 ALTER TABLE `cells`
-  MODIFY `Cell_ID` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=402;
+  MODIFY `Cell_ID` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=401;
 --
 -- AUTO_INCREMENT for table `chat`
 --

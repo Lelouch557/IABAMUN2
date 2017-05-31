@@ -17,8 +17,19 @@ switch($_POST['Action']){
         $make->Units = $_POST['units'];
         echo $make->Make();
     break;
+    case 'Attack':
+        require_once('Train.php');
+        $make = new Train;
+        $make->ID = $_SESSION['Village'];
+        $make->db = $db;
+        $make->Units = $_POST['Army'];
+        echo $_POST['Army'];
+    break;
     case 'delete':
         require_once('Build.php');
         $levelup = new Level;
+    break;
+    default:
+        echo'wrong';
     break;
 }
