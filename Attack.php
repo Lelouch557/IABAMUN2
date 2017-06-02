@@ -51,8 +51,9 @@ $result = $query->fetchall(PDO::FETCH_ASSOC);
 </body>
     <script>
         function Attack(){
+            dest = "<?= $_GET['a'] ?>";
             Units = {<?= $script ?>};
-            $.post('Functions.php',{Action:'Attack',Army:Units},function(awnser){alert(awnser);});
+            $.post('Functions.php',{Action:'Attack',Army:Units,Destination:dest,R_T_S:'1'},function(awnser){if(awnser='Yes'){location.assign('Main.php');}});
         }
     </script>
 </html>

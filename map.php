@@ -46,7 +46,7 @@ $result = $query->fetchall(PDO::FETCH_ASSOC);
     <script>
         function lol(data){
             link = 'Attack.php?a='+data;
-            location.reload(link);
+            location.assign(link);
             //$.post('Functions.php',{Action:'Build_Village',Village:data},function(){alert('Busy');});
         }
     </script>
