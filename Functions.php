@@ -22,8 +22,11 @@ switch($_POST['Action']){
         $make = new Train;
         $make->ID = $_SESSION['Village'];
         $make->db = $db;
+        $make->Type = '1';
+        $make->Target = $_POST['Destination'];
+        $make->Return_To_Sender = $_POST['R_T_S'];
         $make->Units = $_POST['Army'];
-        echo $_POST['Army'];
+        echo $make->Order();
     break;
     case 'delete':
         require_once('Build.php');
