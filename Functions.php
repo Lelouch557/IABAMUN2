@@ -34,6 +34,9 @@ switch($_POST['Action']){
         $make->Return_To_Sender = $_POST['R_T_S'];
         $make->Units = $_POST['Army'];
         echo $make->Order();
+<<<<<<< HEAD
+>>>>>>> 31d903e7e268ec3fe94eb78a73bd1309e00645f3
+=======
 >>>>>>> 31d903e7e268ec3fe94eb78a73bd1309e00645f3
     break;
     case 'delete':

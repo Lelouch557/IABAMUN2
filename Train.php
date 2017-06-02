@@ -44,6 +44,7 @@ class Train{
                 $query->bindPARAM(1,$left,PDO::PARAM_INT);
                 $query->bindPARAM(2,$this->ID,PDO::PARAM_INT);
 <<<<<<< HEAD
+<<<<<<< HEAD
                 $query->bindPARAM(3,$$res[$i]['Units_Name'],PDO::PARAM_INT);
                 $query->execute();
                 
@@ -52,6 +53,11 @@ class Train{
                 $query->execute();
                 $res = $query->fetchall(PDO::FETCH_ASSOC);
 
+=======
+                $query->bindPARAM(3,$res[$i]['Unit_Name'],PDO::PARAM_INT);
+                $query->execute();
+                $Bool = false;
+>>>>>>> 31d903e7e268ec3fe94eb78a73bd1309e00645f3
 =======
                 $query->bindPARAM(3,$res[$i]['Unit_Name'],PDO::PARAM_INT);
                 $query->execute();
