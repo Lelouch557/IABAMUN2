@@ -19,7 +19,6 @@ $result = $query->fetchall(PDO::FETCH_ASSOC);
     </head>
     <body>
         <table cellspacing="0"><?php
-        //print_r($result);
             $k=0;
             for($i=0;$i<count($result);$i++){
                 if(($i%20)==0){
@@ -28,14 +27,18 @@ $result = $query->fetchall(PDO::FETCH_ASSOC);
                 $bool = false;
                 $k++;
                 for($l=0;$l<count($village);$l++){
-                    if(($i+1)==$village[$l]['Cell_ID'] and !$bool){
-                        $pic = '<td onclick="lol(\''.$result[$i]['Coordinates'].'\')" id="'.$result[$i]['Coordinates'].'"><img src="./Images/village.jpg" class="MapCell"></img></td>';
-                        $bool = true;
+                    if(!$bool){
+                        if(($i+1)==$village[$l]['Cell_ID']){
+                            $pic = '<td onclick="lol(\''.$result[$i]['Coordinates'].'\')" id="'.$result[$i]['Coordinates'].'"><img src="./Images/village.jpg" class="MapCell City"></img></td>';
+                            $bool = true;
+                        }else{
+                            $pic = '<td id="'.$result[$i]['Coordinates'].'"><img src="./Images/'.$result[$i]['Terrain'].$result[$i]['Resource_ID'].'.png" class="MapCell"></img></td>';
+                        }
                     }else{
-                        $pic = '<td onclick="lol(\''.$result[$i]['Coordinates'].'\')" id="'.$result[$i]['Coordinates'].'"><img src="./Images/'.$result[$i]['Terrain'].$result[$i]['Resource_ID'].'.png" class="MapCell"></img></td>';
+                        $l=1000000;
                     }
-                    echo $pic;
                 }
+                    echo $pic;
                 if(($k%20)==0){
                     $k=0;
                     echo'</tr>';
@@ -49,5 +52,6 @@ $result = $query->fetchall(PDO::FETCH_ASSOC);
             location.assign(link);
             //$.post('Functions.php',{Action:'Build_Village',Village:data},function(){alert('Busy');});
         }
+        $('.City').hover(function(){$('.City').css('cursor','pointer')});
     </script>
 </html>

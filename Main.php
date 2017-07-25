@@ -60,9 +60,10 @@ $storage = $query->fetchall(PDO::FETCH_ASSOC);
     </div>
     <div id='Building4'>
     <?php for($i=0;$i<count($army);$i++){
-      echo $army[$i][0].' '.constant($army[$i][1]).'\'s<br/>';
+      echo $army[$i][0].' '.constant($army[$i][1]).'\'s<br/>
+      <div id="Building6">';
+      
     }?>
-    <div id='Building6'>
     </div>
     </div>
     <a href="Rekruting.php" id="Building5L">
